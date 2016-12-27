@@ -1,0 +1,11 @@
+{
+  "name": "angular-crud",
+  "version": "1.0.0",
+  "description": "Simple crud made with angular 1.x",
+  "author": "Rodrigo Brito",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "bootstrap": "^3.3.7"
+  }
+}

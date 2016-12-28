@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Novo Funcionário</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form name="cadastrarFuncionario">
+    	<div class="form-group">
+    		<label for="nome">Nome</label>
+    		<input class="form-control" type="text" name="nome" ng-model="funcionario.nome">
+    	</div>
+    	<!-- /.form-group -->
+    	<div class="form-group">
+    		<label for="telefone">Telefone</label>
+    		<input class="form-control" type="text" name="telefone" ng-model="funcionario.telefone">
+    	</div>
+    	<!-- /.form-group -->
+    	<div class="form-group">
+    		<label for="salario">Salário</label>
+    		<input class="form-control" type="text" name="salario" ng-model="funcionario.salario">
+    	</div>
+    	<!-- /.form-group -->
+    	<div class="form-group">
+    		<label for="email">E-mail</label>
+    		<input class="form-control" type="text" name="email" ng-model="funcionario.email">
+    	</div>
+    	<!-- /.form-group -->
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="salvarFuncionario(funcionario)">Salvar</button>
+    <button class="btn btn-warning" type="button" ng-click="fecharModal()">Cancelar</button>
+</div>

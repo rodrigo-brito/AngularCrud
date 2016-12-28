@@ -4,7 +4,10 @@
 	<meta charset="UTF-8">
 	<title>Angular Crud</title>
 	<link rel="stylesheet" href="<?php echo url('/node_modules/bootstrap/dist/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css'); ?>">
 	<script src="<?php echo url('/node_modules/angular/angular.min.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<style>
 		.painel-controles {
 			margin-bottom: 20px;

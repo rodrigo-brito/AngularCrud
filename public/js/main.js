@@ -1,17 +1,19 @@
 var app = angular.module("Usuario", ['ui.bootstrap']);
-app.controller("UsuarioController", function($scope, $uibModal, $log, $http){
+app.controller("UsuarioController", function($scope, $uibModal, $log, $filter, $http){
 	$scope.titulo = "Controle de Funcionários";
+
+	//Lista de mensagens de feedback
 	$scope.messages = {
 		success: [],
 		error: []
 	};
 
-	$scope.funcionarios = [
-		{nome: "Rodrigo", telefone: "99999-8888", salario: 1500, email: "contato@rodrigobrito.net"},
-		{nome: "Maria", telefone: "99999-7777", salario: 2000, email: "contato@maria.net", selecionado: false},
-		{nome: "Pedro", telefone: "66666-7777", salario: 1200, email: "contato@pedro.net", selecionado: true}
-	];
+	//Lista de Funcionários
+	$scope.funcionarios = [];
 
+	/**
+	 * Abre modal com formulário de cadastro de funcionário
+	 */
 	$scope.novoFuncionario = function(){
 		$scope.modalInstance = $uibModal
 		.open({
@@ -22,10 +24,63 @@ app.controller("UsuarioController", function($scope, $uibModal, $log, $http){
 		});
 	};
 
+	$scope.excluirFuncionarios = function(funcionarios){
+
+		var selecionados = funcionarios.filter(function(funcionario){
+			return funcionario.selecionado == true;
+		}).map(function(funcionario){
+			return funcionario.id;
+		});
+
+		var funcionario_selecionados = funcionarios.filter(function(funcionario){
+			return funcionario.selecionado == true;
+		});
+
+		$scope.modalConfirmacao = $uibModal.open({
+			animation: true,
+			templateUrl: 'view/confirmar.html',
+			size: 'md'
+		}).result.then(function () {
+			angular.forEach(selecionados, function(id){
+				$http.delete('http://localhost:8080/funcionario/excluir/' + id).then(function(response){
+					if(response.data.status === 'success'){
+						$scope.messages.success.push(response.data.msg);
+					}else{
+						$scope.messages.error.push(response.data.msg);
+					}
+					$scope.atualizarListagem();
+				}, function(response){
+					$scope.messages.error.push("Erro ao excluir usuário, tente novamente mais tarde");
+				});
+			});
+	    }, function () {
+	    	console.log("Operação de exclusão cancelada.");
+	    });
+	}
+
+	/**
+	 * Retorna a lista de funcionários persistidos em banco de dados e atualiza listagem
+	 * @return {Array} Array de funcionários
+	 */
+	$scope.atualizarListagem = function(){
+		$http.get('http://localhost:8080/funcionario/listar').then(function (response){
+			$scope.funcionarios = response.data;
+		}, function (response){
+			scope.messages.error.push("Erro ao listar funcionários, tente novamente mais tarde.");
+		});
+	};
+
+	/**
+	 * Fecha o modal de cadastrado/atualização de funcionários
+	 */
 	$scope.fecharModal = function (){
 		$scope.modalInstance.dismiss();
 	};
 
+	/**
+	 * Persiste dados de funcionário fornecido
+	 * @param  {Object} funcionario funcionário a ser persistido
+	 */
 	$scope.salvarFuncionario = function(funcionario) {
 		$http.post('http://localhost:8080/funcionario/cadastrar', funcionario)
 		.then(function(response){
@@ -33,6 +88,7 @@ app.controller("UsuarioController", function($scope, $uibModal, $log, $http){
 			if(data.status === 'success'){
 				$scope.messages.success.push(data.msg);
 				delete funcionario;
+				$scope.atualizarListagem();
 				$scope.fecharModal();
 			}else{
 				$scope.modalMessages.error.push(data.msg);
@@ -41,4 +97,6 @@ app.controller("UsuarioController", function($scope, $uibModal, $log, $http){
 			console.log(response);
 		});
 	};
+
+	$scope.atualizarListagem();
 });

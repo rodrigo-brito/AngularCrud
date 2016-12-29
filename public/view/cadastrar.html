@@ -2,30 +2,48 @@
     <h3 class="modal-title" id="modal-title">Novo Funcionário</h3>
 </div>
 <div class="modal-body" id="modal-body">
+	<div class="alert alert-danger" ng-if="modalMessages.error.length">
+		<ul>
+			<li ng-repeat="error in modalMessages.error">{{ error }}</li>
+		</ul>
+	</div>
+	<!-- /.alert-danger -->
     <form name="cadastrarFuncionario">
     	<div class="form-group">
     		<label for="nome">Nome</label>
-    		<input class="form-control" type="text" name="nome" ng-model="funcionario.nome">
+    		<input class="form-control" type="text" name="nome" ng-model="funcionario.nome" required>
+    		<p class="alert alert-danger" ng-show="cadastrarFuncionario.nome.$invalid && cadastrarFuncionario.nome.$dirty">
+    			Campo Obrigatório
+    		</p>
     	</div>
     	<!-- /.form-group -->
     	<div class="form-group">
     		<label for="telefone">Telefone</label>
-    		<input class="form-control" type="text" name="telefone" ng-model="funcionario.telefone">
+    		<input class="form-control" type="text" name="telefone" ng-model="funcionario.telefone" required>
+    		<p class="alert alert-danger" ng-show="cadastrarFuncionario.telefone.$invalid && cadastrarFuncionario.telefone.$dirty">
+    			Campo Obrigatório
+    		</p>
     	</div>
     	<!-- /.form-group -->
     	<div class="form-group">
     		<label for="salario">Salário</label>
-    		<input class="form-control" type="text" name="salario" ng-model="funcionario.salario">
+    		<input class="form-control" type="number" name="salario" ng-model="funcionario.salario" required>
+    		<p class="alert alert-danger" ng-show="cadastrarFuncionario.salario.$invalid && cadastrarFuncionario.salario.$dirty">
+    			Campo Obrigatório
+    		</p>
     	</div>
     	<!-- /.form-group -->
     	<div class="form-group">
     		<label for="email">E-mail</label>
-    		<input class="form-control" type="text" name="email" ng-model="funcionario.email">
+    		<input class="form-control" type="email" name="email" ng-model="funcionario.email" required>
+    		<p class="alert alert-danger" ng-show="cadastrarFuncionario.email.$invalid && cadastrarFuncionario.email.$dirty">
+    			O valor fornecido deve ser um email válido
+    		</p>
     	</div>
     	<!-- /.form-group -->
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="salvarFuncionario(funcionario)">Salvar</button>
+    <button class="btn btn-primary" type="button" ng-disabled="!cadastrarFuncionario.$valid" ng-click="salvarFuncionario(funcionario)">Salvar</button>
     <button class="btn btn-warning" type="button" ng-click="fecharModal()">Cancelar</button>
 </div>

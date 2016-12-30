@@ -9,6 +9,8 @@
 	<script src="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/main.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/js/services/FuncionarioAPIService.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/js/controllers/FuncionarioController.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<style>
 		.painel-controles {
 			margin-bottom: 20px;

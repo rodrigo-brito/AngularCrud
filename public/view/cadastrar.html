@@ -26,8 +26,8 @@
     	</div>
     	<!-- /.form-group -->
     	<div class="form-group">
-    		<label for="salario">Salário</label>
-    		<input class="form-control" type="number" name="salario" ng-model="funcionario.salario" required>
+    		<label for="salario">Salário: {{funcionario.salario}}</label>
+    		<input class="form-control" type="text" name="salario" ng-model="funcionario.salario" required ui-dinheiro>
     		<p class="alert alert-danger" ng-show="cadastrarFuncionario.salario.$invalid && cadastrarFuncionario.salario.$dirty">
     			Campo Obrigatório
     		</p>
@@ -44,6 +44,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="!cadastrarFuncionario.$valid" ng-click="salvarFuncionario(funcionario)">Salvar</button>
-    <button class="btn btn-warning" type="button" ng-click="fecharModal()">Cancelar</button>
+    <button class="btn btn-primary" type="button" ng-disabled="!cadastrarFuncionario.$valid" ng-click="$close(funcionario)">Salvar</button>
+    <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancelar</button>
 </div>

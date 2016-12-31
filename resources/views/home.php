@@ -10,6 +10,7 @@
 	<script src="<?php echo url('/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/main.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/services/FuncionarioAPIService.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/js/directives/uiDinheiroDirective.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/controllers/FuncionarioController.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<style>
 		.painel-controles {
@@ -37,8 +38,8 @@
 		<div class="row painel-controles">
 			<div class="col-md-12">
 				<button class="btn btn-primary" ng-click="novoFuncionario()"><i class="glyphicon glyphicon-plus"></i> Novo</button>
-				<button class="btn btn-info" ng-click="editarFuncionario()"><i class="glyphicon glyphicon-pencil"></i> Editar</button>
-				<button class="btn btn-danger" ng-click="excluirFuncionarios(funcionarios)"><i class="glyphicon glyphicon-remove"></i> Excluir</button>
+				<button class="btn btn-info" ng-click="editarFuncionario(getFuncionariosSelecionados()[0])" ng-disabled="getFuncionariosSelecionados().length != 1"><i class="glyphicon glyphicon-pencil"></i> Editar</button>
+				<button class="btn btn-danger" ng-click="excluirFuncionarios(funcionarios)" ng-disabled="getFuncionariosSelecionados().length < 1"><i class="glyphicon glyphicon-remove"></i> Excluir</button>
 			</div>
 		</div>
 		<div class="row">
@@ -55,7 +56,6 @@
 							<th>Salário</th>
 							<th>E-mail</th>
 						</tr>
-						ID: <span ng-repeat="funcionario in funcionarios | filter: funcionario.selecionado = true">{{funcionario.id}}</span>
 						<tr ng-repeat="funcionario in funcionarios | filter: busca">
 							<th><input type="checkbox" name="selecionado" value="{{funcionario.id}}" ng-model="funcionario.selecionado"></th>
 							<th>{{funcionario.nome}}</th>

@@ -14,34 +14,74 @@ angular.module("Usuario").controller("UsuarioController", function($scope, $uibM
 	 * Abre modal com formulário de cadastro de funcionário
 	 */
 	$scope.novoFuncionario = function(){
-		$scope.modalInstance = $uibModal
-		.open({
+		$scope.modalInstance = $uibModal.open({
 			animation: true,
 			templateUrl: 'view/cadastrar.html',
 			scope: $scope,
 			size: 'md'
 		});
+
+		$scope.modalInstance.result.then(function(funcionario){
+			FuncionarioAPI.salvar(funcionario).then(function(response){
+				var data = response.data;
+				if(data.status === 'success'){
+					$scope.messages.success.push(data.msg);
+					delete funcionario;
+					$scope.atualizarListagem();
+				}else{
+					$scope.modalMessages.error.push(data.msg);
+				}
+			}, function(response){
+				console.log(response);
+			});
+		},function(){
+			delete $scope.funcionario;
+		});
+	};
+
+	$scope.editarFuncionario = function(funcionario){
+		$scope.funcionario = funcionario;
+
+		$scope.modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'view/cadastrar.html',
+			scope: $scope,
+			size: 'md'
+		});
+
+		$scope.modalInstance.result.then(function(funcionario){
+			FuncionarioAPI.atualizar(funcionario).then(function(response){
+				var data = response.data;
+				if(data.status === 'success'){
+					$scope.messages.success.push(data.msg);
+					delete funcionario;
+					$scope.atualizarListagem();
+				}else{
+					$scope.modalMessages.error.push(data.msg);
+				}
+			}, function(response){
+				console.log(response);
+			});
+		},function(){
+			delete $scope.funcionario;
+		});
+	};
+
+	$scope.getFuncionariosSelecionados = function(){
+		return $scope.funcionarios.filter(function(funcionario){
+			return funcionario.selecionado === true;
+		});
 	};
 
 	$scope.excluirFuncionarios = function(funcionarios){
-
-		var selecionados = funcionarios.filter(function(funcionario){
-			return funcionario.selecionado == true;
-		}).map(function(funcionario){
-			return funcionario.id;
-		});
-
-		var funcionario_selecionados = funcionarios.filter(function(funcionario){
-			return funcionario.selecionado == true;
-		});
 
 		$scope.modalConfirmacao = $uibModal.open({
 			animation: true,
 			templateUrl: 'view/confirmar.html',
 			size: 'md'
 		}).result.then(function () {
-			angular.forEach(selecionados, function(id){
-				FuncionarioAPI.excluir(id).then(function(response){
+			angular.forEach($scope.getFuncionariosSelecionados(), function(funcionario){
+				FuncionarioAPI.excluir(funcionario.id).then(function(response){
 					if(response.data.status === 'success'){
 						$scope.messages.success.push(response.data.msg);
 					}else{
@@ -66,33 +106,6 @@ angular.module("Usuario").controller("UsuarioController", function($scope, $uibM
 			$scope.funcionarios = response.data;
 		}, function (response){
 			scope.messages.error.push("Erro ao listar funcionários, tente novamente mais tarde.");
-		});
-	};
-
-	/**
-	 * Fecha o modal de cadastrado/atualização de funcionários
-	 */
-	$scope.fecharModal = function (){
-		$scope.modalInstance.dismiss();
-	};
-
-	/**
-	 * Persiste dados de funcionário fornecido
-	 * @param  {Object} funcionario funcionário a ser persistido
-	 */
-	$scope.salvarFuncionario = function(funcionario) {
-		FuncionarioAPI.salvar(funcionario).then(function(response){
-			var data = response.data;
-			if(data.status === 'success'){
-				$scope.messages.success.push(data.msg);
-				delete funcionario;
-				$scope.atualizarListagem();
-				$scope.fecharModal();
-			}else{
-				$scope.modalMessages.error.push(data.msg);
-			}
-		}, function(response){
-			console.log(response);
 		});
 	};
 

@@ -22,7 +22,7 @@
 <body ng-controller="UsuarioController">
 	<div class="container">
 		<div class="well">
-			<h4>{{ titulo }}</h4>
+			<h4>{{ ::titulo }}</h4>
 		</div>
 		<div ng-if="messages">
 			<div class="alert alert-danger" ng-show="messages.error.length">
@@ -57,12 +57,12 @@
 							<th>Salário</th>
 							<th>E-mail</th>
 						</tr>
-						<tr ng-repeat="funcionario in funcionarios | filter: busca">
+						<tr ng-repeat="funcionario in funcionarios | filter: busca track by funcionario.id">
 							<th><input type="checkbox" name="selecionado" value="{{funcionario.id}}" ng-model="funcionario.selecionado"></th>
-							<th>{{funcionario.nome}}</th>
-							<th>{{funcionario.telefone}}</th>
-							<th>{{funcionario.salario | currency}}</th>
-							<th>{{funcionario.email}}</th>
+							<th>{{::funcionario.nome}}</th>
+							<th>{{::funcionario.telefone}}</th>
+							<th>{{::funcionario.salario | currency}}</th>
+							<th>{{::funcionario.email}}</th>
 						</tr>
 					</table><!-- tblUsuarios -->
 				</div>

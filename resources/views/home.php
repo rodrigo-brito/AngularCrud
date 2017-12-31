@@ -11,6 +11,7 @@
 	<script src="<?php echo url('/js/main.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/services/FuncionarioAPIService.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/directives/uiDinheiroDirective.js'); ?>" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php echo url('/js/directives/uiTelefoneDirective.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<script src="<?php echo url('/js/controllers/FuncionarioController.js'); ?>" type="text/javascript" charset="utf-8"></script>
 	<style>
 		.painel-controles {

@@ -11,7 +11,7 @@ angular.module("Usuario").controller("UsuarioController", function($scope, $uibM
 	$scope.funcionarios = [];
 
 	/**
-	 * Abre modal com formulário de cadastro de funcionário
+	 * Controle e persistência do model de cadastro de funcionários
 	 */
 	$scope.novoFuncionario = function(){
 		$scope.modalInstance = $uibModal.open({
@@ -39,6 +39,9 @@ angular.module("Usuario").controller("UsuarioController", function($scope, $uibM
 		});
 	};
 
+	/**
+	 * Controle e persistência do model de edição de funcionários
+	 */
 	$scope.editarFuncionario = function(funcionario){
 		$scope.funcionario = funcionario;
 
@@ -67,14 +70,21 @@ angular.module("Usuario").controller("UsuarioController", function($scope, $uibM
 		});
 	};
 
+	/**
+	 * Filtra a lista de funcionários selecionados na tabela principal
+	 * @return {Array} Lista de funcionários selecionados
+	 */
 	$scope.getFuncionariosSelecionados = function(){
 		return $scope.funcionarios.filter(function(funcionario){
 			return funcionario.selecionado === true;
 		});
 	};
 
+	/**
+	 * Trata a exclusão de funcionários e confirmação da operação
+	 * @param  {Array} funcionarios Lista de funcionários a ser excluído
+	 */
 	$scope.excluirFuncionarios = function(funcionarios){
-
 		$scope.modalConfirmacao = $uibModal.open({
 			animation: true,
 			templateUrl: 'view/confirmar.html',

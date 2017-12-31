@@ -19,7 +19,7 @@
     	<!-- /.form-group -->
     	<div class="form-group">
     		<label for="telefone">Telefone</label>
-    		<input class="form-control" type="text" name="telefone" ng-model="funcionario.telefone" required>
+    		<input class="form-control" type="text" name="telefone" ng-model="funcionario.telefone" required ui-telefone>
     		<p class="alert alert-danger" ng-show="cadastrarFuncionario.telefone.$invalid && cadastrarFuncionario.telefone.$dirty">
     			Campo Obrigatório
     		</p>
